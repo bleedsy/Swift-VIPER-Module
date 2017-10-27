@@ -20,96 +20,16 @@ Go to Application folder, browse to the Xcode application icon. Right-click it a
 `Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Templates/Project Templates/iOS/Application` and add "Module VIPER.xctemplate" file. Now you can find your template in Xcode.
 
 ## Easy to use
-![Preview](/assets/demoviper.gif)
+![](/assets/wizard.png)
 
 ## Generated code
 This template generates all files that you need to create a new VIPER module. All generated code is Swift 3.
 
 This is an example, we're creating a Login module:
 
-**Protocols**
-```swift
-//MARK: Wireframe -
-protocol LoginWireframeProtocol: class {
+- [Default, without divide](/assets/defaultOutput.md)
+- [With divided Interactor (Input & Output)](/assets/inputOutput.md)
 
-}
-//MARK: Presenter -
-protocol LoginPresenterProtocol: class {
-
-}
-
-//MARK: Interactor -
-protocol LoginInteractorProtocol: class {
-
-  var presenter: LoginPresenterProtocol?  { get set }
-}
-
-//MARK: View -
-protocol LoginViewProtocol: class {
-
-  var presenter: LoginPresenterProtocol?  { get set }
-}
-```
-
-**Interactor**
-```swift
-class LoginInteractor: LoginInteractorProtocol {
-
-    weak var presenter: LoginPresenterProtocol?
-}
-```
-
-**Presenter**
-```swift
-class LoginPresenter: LoginPresenterProtocol {
-
-    weak private var view: LoginViewProtocol?
-    private let interactor: LoginInteractorProtocol
-    private let router: LoginWireframeProtocol
-
-    init(interface: LoginViewProtocol, interactor: LoginInteractorProtocol, router: LoginWireframeProtocol) {
-        self.view = interface
-        self.interactor = interactor
-        self.router = router
-
-        self.interactor.presenter = self
-    }
-}
-```
-
-**Wireframe**
-```swift
-class LoginRouter: LoginWireframeProtocol {
-
-    weak var viewController: UIViewController?
-
-    static func createModule() -> UIViewController {
-        
-        let view = LoginViewController(nibName: nil, bundle: nil)
-        let interactor = LoginInteractor()
-        let router = LoginRouter()
-        let presenter = LoginPresenter(interface: view, interactor: interactor, router: router)
-
-        view.presenter = presenter
-        interactor.presenter = presenter
-        router.viewController = view
-
-        return view
-    }
-}
-```
-
-**View**
-```swift
-class LoginViewController: UIViewController, LoginViewProtocol {
-
-	var presenter: LoginPresenterProtocol?
-
-	override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-}
-```
 ## VIPER diagram overview
 ![Preview](/assets/viper_diagram.png)
 
@@ -126,8 +46,10 @@ After using VIPER, I've found it to be very beneficial in many ways. Let’s get
 Would you like decide what will be the next feature? now, you can do it [here](https://goo.gl/forms/8SrF30p7ort0hCio2)
 
 * [x] Create bash script to install more easy
+* [x] Divide Interactor protocol (Input & Output) (**NEW!** Version 1.1)
+* [x] Swift 4 & XCode 9 (**NEW!** Version 1.2)
 * [ ] Add Dependency Injection Framework
-* [ ] Divide Interactor protocol (Input & Output)
+* [ ] Customize name of components
 * [ ] ~~Create groups in template~~ *(Only available for Project templates)*
 
 ## References
